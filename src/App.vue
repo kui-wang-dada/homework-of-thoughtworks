@@ -28,6 +28,10 @@
 </script>
 
 <style type="text/scss" lang="scss" rel="stylesheet/scss">
+    html,body{
+        margin:0;
+        padding:0;
+    }
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -61,8 +65,27 @@
         }
         
     }
-    @media screen and (max-width:500px){
-        #app{width:100%;margin:0;padding:0;}
+    @media screen and (max-width:700px){
+        #app{
+            width:100%;
+            margin:0;
+            padding:0;
+            .header{
+                flex-direction:column;
+                h1{
+                    align-self:center;
+                    margin:0;
+                }
+                .header_right{
+                    align-items:center;
+                    p{
+                        align-self:center;
+                    }
+                }
+            }
+        }
+        
     }
+  
     
 </style>

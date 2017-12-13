@@ -28,7 +28,7 @@
         font-size: 14px;
         .tab-item {
             flex: 0.1;
-            border: 2px solid #282828;
+            border: 2px solid #242424;
             border-bottom:none;
             border-radius: 8px 8px 0 0;
             margin-left: 5px;
@@ -40,13 +40,21 @@
             }
         }
         .router-link-active{
-               
+               z-index:1;
                 background:#606060;
             .tab-link{
                 color:#fff;
             }
         }
        
+    }
+    @media screen and (max-width:700px){
+        .tab{
+            height:30px;
+            line-height:30px;
+            font-size:12px;
+            
+        }
     }
     
 </style>

@@ -18,9 +18,9 @@
                                     <span class="type" v-for="item_s in item.title.typelist">{{item_s}}</span>
                                 </div>
                                 <div class="content">
-                                    <span class="specify" @click.stop="addResource(item)">
+                                    <span class="specify" @click.stop="showDialog(item)">
                                         <i class="icon iconfont icon-add1"></i>
-                                        <a href="">{{item.add}}</a>
+                                        <a href="javascript:void(0)">{{item.add}}</a>
                                     </span>
                                     <span>Resources:</span>
                                     <span class="resources" v-for="item_h in item.resources">{{item_h}}
@@ -28,10 +28,10 @@
                                            @click.stop="delResources(item,item_h)"></i></span>
                                     <div v-show="item.isShow" class="modal">
                                         <h6>(separate multiple resources name with commas)</h6>
-                                        <input type="text">
-                                        <div class="">
-                                            <input type="button" value="Add resources">
-                                            <input type="button" value="Close">
+                                        <input type="text" @click.stop v-model="item.inputMsg">
+                                        <div class="modal_btn">
+                                            <input type="button" value="Add resources"  @click.stop="addResource(item)">
+                                            <input type="button" value="Close" @click.stop="cancelResource(item)">
                                         </div>
                                     </div>
                                 
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="deny"><i class="icon iconfont icon-forbidden"></i>Deny</div>
-                        
+                    
                     </li>
                 </ul>
             </div>
@@ -70,8 +70,9 @@
                 recommends: [
                     {
                         listId: 0,
-                        isShow:true,
+                        isShow: false,
                         isChoose: "",
+                        inputMsg:"",
                         title: {
                             name: "bjstdmngbgr02.thoughtworks.com",
                             typelist: [
@@ -89,8 +90,9 @@
                     },
                     {
                         listId: 1,
-                        isShow:false,
+                        isShow: false,
                         isChoose: "",
+                        inputMsg:"",
                         title: {
                             name: "bjstdmngbgr03.thoughtworks.com",
                             typelist: [
@@ -103,13 +105,15 @@
                         resources: [
                             "ubuntu",
                             "firefox3",
+                            "mysql",
                             "core-duo"
                         ]
                     },
                     {
                         listId: 2,
-                        isShow:false,
+                        isShow: false,
                         isChoose: "",
+                        inputMsg:"",
                         title: {
                             name: "bjstdmngbgr04.thoughtworks.com",
                             typelist: [
@@ -122,13 +126,15 @@
                         resources: [
                             "ubuntu",
                             "firefox3",
+                            "mysql",
                             "core-duo"
                         ]
                     },
                     {
                         listId: 3,
-                        isShow:false,
+                        isShow: false,
                         isChoose: "",
+                        inputMsg:"",
                         title: {
                             name: "bjstdmngbgr05.thoughtworks.com",
                             typelist: [
@@ -139,15 +145,15 @@
                         },
                         add: "Specify Resources",
                         resources: [
-                            "ubuntu",
-                            "firefox3",
-                            "core-duo"
+                            "ubuntu"
+                            
                         ]
                     },
                     {
                         listId: 4,
-                        isShow:false,
+                        isShow: false,
                         isChoose: "",
+                        inputMsg:"11",
                         title: {
                             name: "bjstdmngbgr05.thoughtworks.com",
                             typelist: [
@@ -206,8 +212,18 @@
                 this.recommends[item.listId].resources = this.recommends[item.listId].resources.filter(o => o != item_h)
                 
             },
-            addResource(item){
-            
+            showDialog(item){
+                item.isShow=true;
+            },
+            addResource(item) {
+                let listId=item.listId
+                let arr=this.recommends[listId].inputMsg.split(",");
+                this.recommends[listId].resources=this.recommends[listId].resources.concat(arr);
+                this.recommends[listId].isShow=false;
+                this.recommends[listId].inputMsg=""
+            },
+            cancelResource(item){
+                item.isShow=false;
             }
         }
     }
@@ -226,6 +242,9 @@
             width: 100%;
             height: 50px;
             display: flex;
+            box-sizing:border-box;
+            border:2px solid #242424;
+            border-bottom:none;
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
@@ -255,7 +274,8 @@
             .leftContent {
                 flex: 0.8;
                 padding: 20px;
-                border: 1px solid #ededed;
+                border: 2px solid #242424;
+                border-right:none;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -294,6 +314,7 @@
                                     font-weight: bold;
                                     h4 {
                                         display: inline-block;
+                                        margin:10px 0 5px 0;
                                     }
                                     span.type {
                                         border-left: 1px solid #282828;
@@ -303,30 +324,69 @@
                                     }
                                 }
                                 .content {
-                                    margin-bottom: 10px;
+                                    margin:5px 0 10px 0;
                                     font-size: 14px;
-                                    position:relative;
+                                    position: relative;
                                     .specify {
                                         i {
                                             font-size: 12px;
                                             margin-right: 5px;
+                                        }
+                                        a{
+                                            color:#503e00;
                                         }
                                         border-right: 1px solid #282828;
                                         margin-right: 5px;
                                         padding-right: 5px;
                                     }
                                     .resources {
-                                        margin-right: 20px;
+                                        margin-right: 10px;
+                                        i{
+                                            align-self:flex-end;
+                                        }
                                     }
-                                    .modal{
-                                        z-index:999;
+                                    .modal {
+                                        z-index: 999;
                                         background: #dffbc8;
-                                        width:400px;
-                                        border:1px solid #d57d1d;
+                                        width: 100%;
+                                        border: 2px solid #503e00;
+                                        position: absolute;
+                                        left: 20px;
+                                        top: 40px;
+                                        display:flex;
+                                        flex-direction:column;
+                                        align-items: flex-start;
+                                        border-radius:10px;
+                                        h6{
+                                            text-align: left;
+                                            margin:10px;
+                                        }
+                                        input[type="text"]{
+                                            margin:0 10px ;
+                                            width:90%;
+                                        }
+                                        .modal_btn{
+                                            margin:10px;
+                                            input{
+                                                border:2px solid #503e00;
+                                                margin-right:10px;
+                                                padding:5px 10px;
+                                                border-radius:20px;
+                                            }
+                                        }
+                                    }
+                                    .modal::before{
+                                        content:'';
                                         position:absolute;
-                                        left:20px;
-                                        top:20px;
-                                        
+                                        z-index:-1;
+                                        top:-18px;
+                                        left:30px;
+                                        width:30px;
+                                        height:30px;
+                                        border-left:2px solid #503e00;
+                                        border-top:2px solid #503e00;
+                                        background:#dffbc8;
+                                        transform: rotate(45deg);
                                     }
                                 }
                                 
@@ -348,15 +408,16 @@
                 
             }
             .rightContent {
-                border: 1px solid #282828;
+                border: 2px solid #242424;
                 display: flex;
                 flex-direction: column;
                 flex: 0.2;
                 align-items: left;
-                padding: 20px;
+                padding: 10px;
                 div {
                     width: 100%;
                     text-align: left;
+                    font-size:12px;
                 }
                 div.summary {
                     p {
@@ -370,13 +431,34 @@
                 
             }
         }
-        @media screen and (max-width: 850px) {
+        @media screen and (max-width: 700px) {
             .agentsMain {
                 flex-direction: column;
-                .circle {
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 15px;
+                .leftContent {
+                    padding: 0;
+                    margin: 0;
+                    ul li .wrap .circle {
+                        width: 0;
+                        height:0;
+                        
+                    }
+                }
+                
+            }
+        }
+        @media screen and (max-width:350px){
+            .agentsMain .leftContent ul li{
+                flex-direction:column;
+                .wrap .main .title span.type{
+                    display:block;
+                    border:none;
+                    margin-top:5px;
+                }
+                .wrap .main .content .specify{
+                    display:block;
+                }
+                .deny{
+                    align-self:center;
                 }
             }
             
