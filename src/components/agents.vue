@@ -67,6 +67,8 @@
         name: 'agents',
         data() {
             return {
+                /* 初始数据，一般情况下应在created中进行axios请求后台数据*/
+                /*leftContent相关数据*/
                 recommends: [
                     {
                         listId: 0,
@@ -171,6 +173,7 @@
                     }
                 
                 ],
+                /*rightContent相关数据*/
                 Summary: [
                     {
                         name: "idle",
@@ -189,9 +192,11 @@
             }
         },
         created() {
+            /*初始数据渲染*/
             this.getStyle();
         },
         methods: {
+            /*根据leftContent相关数据，rightContent显示相应内容*/
             getStyle() {
                 for (let i = 0; i < this.recommends.length; i++) {
                     if (this.recommends[i].title.typelist[0] == "idle") {
@@ -203,18 +208,22 @@
                     }
                 }
             },
+            /*点击左边列表项，右边History会出现相应点击的信息*/
             addHistory(item) {
                 let spi = item.title.name.split(".")[0];
                 let arr = spi + "/" + "Acceptance_test";
                 this.history.push(arr);
             },
+            /*删除当前列表的当前resources*/
             delResources(item, item_h) {
                 this.recommends[item.listId].resources = this.recommends[item.listId].resources.filter(o => o != item_h)
                 
             },
+            /*点击出现弹窗*/
             showDialog(item){
                 item.isShow=true;
             },
+            /*弹窗中输入数据，通过split方法将输入的数据通过“，”区分，再利用concat方法加入到数据中*/
             addResource(item) {
                 let listId=item.listId
                 let arr=this.recommends[listId].inputMsg.split(",");
@@ -222,6 +231,7 @@
                 this.recommends[listId].isShow=false;
                 this.recommends[listId].inputMsg=""
             },
+            /*点击close关闭弹窗*/
             cancelResource(item){
                 item.isShow=false;
             }

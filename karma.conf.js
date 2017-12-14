@@ -14,6 +14,7 @@ module.exports = function(config) {
         // modified
         preprocessors: {
             'src/**/*.js': ['coverage']
+
         },
 
         //modified

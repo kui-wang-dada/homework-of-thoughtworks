@@ -27,7 +27,6 @@
         line-height: 44px;
         font-size: 14px;
         .tab-item {
-            flex: 0.1;
             border: 2px solid #242424;
             border-bottom:none;
             border-radius: 8px 8px 0 0;
