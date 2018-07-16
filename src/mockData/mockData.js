@@ -106,17 +106,21 @@ module.exports = {
     /*rightContent相关数据*/
     Summary: [
         {
-            name: "idle",
-            count: ''
+            name: "building",
+            count: 0
         },
         {
-            name: "building",
-            count: ''
+            name: "idle",
+            count: 0
         }
+
     ],
     history: [
         "bjstdmngbgr02/Acceptance_test",
-        "bjstdmngbgr02/Acceptance_test",
-        "bjstdmngbgr02/Acceptance_test",
+        "bjstdmngbgr03/Acceptance_test",
+        "bjstdmngbgr04/Acceptance_test",
+        "bjstdmngbgr05/Acceptance_test",
+        "bjstdmngbgr05/Acceptance_test",
+
     ]
 }
